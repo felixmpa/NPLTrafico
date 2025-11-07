@@ -1,28 +1,17 @@
 import pandas as pd
 import ast
 import random
+import os
 
-# === CARGAR DATOS ===
-users = pd.read_csv("ETL/users.csv")
-accidents = pd.read_csv("ETL/accidents.csv")
-points = pd.read_csv("ETL/points_of_interest.csv")
-
-# === LIMPIEZA Y PARSEO DE LISTAS ===
+# === FUNCIONES AUXILIARES ===
 def parse_list(x):
     try:
         return ast.literal_eval(x)
     except:
         return []
 
-for df, cols in [
-    (users, ["interests", "frequent_routes"]),
-    (points, ["related_interests", "nearby_routes"]),
-]:
-    for c in cols:
-        df[c] = df[c].apply(parse_list)
-
 # === FUNCIÓN PARA RECOMENDAR POR ACCIDENTE ===
-def recomendar_por_accidente():
+def recomendar_por_accidente(users, accidents, points):
     # 1️⃣ Seleccionar un accidente aleatorio con ubicación válida
     accidentes_validos = accidents[
         accidents["extracted_locations"].notna() & 
@@ -111,6 +100,36 @@ def recomendar_por_accidente():
         print(mensaje)
         print("-" * 60)
 
+def run():
+    """Main function to run the accident-based recommendation system."""
+    print("\n" + "=" * 80)
+    print("🚨 SISTEMA DE RECOMENDACIONES BASADO EN ACCIDENTES")
+    print("=" * 80)
+    
+    # === CARGAR DATOS ===
+    users_path = os.path.join("ETL", "users.csv")
+    accidents_path = os.path.join("ETL", "accidents.csv")
+    points_path = os.path.join("ETL", "points_of_interest.csv")
+    
+    users = pd.read_csv(users_path)
+    accidents = pd.read_csv(accidents_path)
+    points = pd.read_csv(points_path)
+
+    # === LIMPIEZA Y PARSEO DE LISTAS ===
+    for df, cols in [
+        (users, ["interests", "frequent_routes"]),
+        (points, ["related_interests", "nearby_routes"]),
+    ]:
+        for c in cols:
+            df[c] = df[c].apply(parse_list)
+
+    # === EJECUTAR RECOMENDACIÓN ===
+    recomendar_por_accidente(users, accidents, points)
+
+def main():
+    """Alias for run() function."""
+    run()
+
 # === EJECUTAR RECOMENDACIÓN ===
 if __name__ == "__main__":
-    recomendar_por_accidente()
+    run()

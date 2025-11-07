@@ -28,11 +28,14 @@ python -m pip install -r requirements.txt
 
 ### ETL
 
+Vamos a utilizar el dataset extraído llamado **`instagram_posts.csv`**.
+Para ello, es necesario ejecutar el siguiente comando:
 
+```bash
+python run_pipeline.py
+```
 
-
-
-Aquí tienes una versión mejor redactada y más profesional para el README:
+Debes seleccionar las **opciones 1 y 2** para generar los archivos **.csv** con sus respectivas **clasificaciones mediante NLP** y los **datos genéricos** que simulan usuarios y puntos de interés.
 
 ---
 
@@ -44,4 +47,11 @@ El **dataset** ya está incluido en este proyecto. Sin embargo, si deseas **desc
 python -m instaloader --login tu_usuario_de_instagram
 ```
 
+### Ver recomendaciones
 
+```bash
+python run_pipeline.py
+```
+
+Debes seleccionar las opciones de recomendaciones desde el menú.
+Es requisito haber ejecutado previamente el paso de ETL.
