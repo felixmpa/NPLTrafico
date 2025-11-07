@@ -307,7 +307,7 @@ class AnalizerNLP:
 # EJEMPLO DE USO
 # ============================================================================
 
-if __name__ == "__main__":
+def main():
     # Inicializar analizador
     analizador = AnalizerNLP()
 

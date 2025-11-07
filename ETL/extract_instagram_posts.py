@@ -28,11 +28,8 @@ import pandas as pd
 # 🔧 CONFIGURACIÓN
 # =============================
 USERNAME = "elcheposord"        # ⚠️ Tu usuario de Instagram
-
-#TARGET = "accidentes_rd"        # Cuenta objetivo
 TARGET = "accidentes_rd"
-
-LIMIT = 300                      # Número máximo de publicaciones a intentar extraer (puedes subirlo)
+LIMIT = 350                      # Número máximo de publicaciones a intentar extraer (puedes subirlo)
 OUTPUT_FILE = "instagram_posts.csv"
 
 # =============================

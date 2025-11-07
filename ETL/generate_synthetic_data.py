@@ -18,10 +18,21 @@ USER_INTERESTS_POOL = [
 ZONES_RESIDENTIAL = []
 ZONES_WORK = []
 
-POI_TYPES = [
-    "Gimnasio", "Cine", "Restaurante", "Centro Comercial",
-    "Centro Cultural", "Cafetería", "Tienda", "Spa", "Parque", "Museo"
-]
+# POI types mapped to related interests for better matching
+POI_INTEREST_MAPPING = {
+    "Gimnasio": ["deportes", "salud", "dieta"],
+    "Cine": ["películas", "entretenimiento"],
+    "Restaurante": ["gastronomía", "entretenimiento"],
+    "Centro Comercial": ["moda", "entretenimiento"],
+    "Centro Cultural": ["arte", "entretenimiento", "lectura"],
+    "Cafetería": ["gastronomía", "negocios", "lectura"],
+    "Tienda": ["moda", "entretenimiento"],
+    "Spa": ["salud", "dieta"],
+    "Parque": ["deportes", "salud", "fotografía"],
+    "Museo": ["arte", "entretenimiento", "lectura"]
+}
+
+POI_TYPES = list(POI_INTEREST_MAPPING.keys())
 
 # ==========================================================
 # 1. READ ACCIDENTS AND EXTRACT LOCATIONS
@@ -72,18 +83,14 @@ for i in range(1, N_USERS + 1):
     work_zone = random.choice(ZONES_WORK)
     interests = random.sample(USER_INTERESTS_POOL, k=3)
     
-    # Generate routes with higher probability for residential and work zones
+    # Generate routes strictly limited to residential and work zones
     candidate_routes = [residential_zone, work_zone]
     
-    # Add some random routes from popular_routes
-    additional_routes = random.sample(
-        [r for r in popular_routes if r not in candidate_routes], 
-        k=random.randint(0, 2)
-    )
-    candidate_routes.extend(additional_routes)
+    # Remove duplicates if residential and work zones are the same
+    candidate_routes = list(set(candidate_routes))
     
-    # Select final routes (1-3 routes per user)
-    num_routes = min(random.randint(1, 3), len(candidate_routes))
+    # Select routes only from residential and work zones (1-2 routes max)
+    num_routes = min(random.randint(1, 2), len(candidate_routes))
     routes = random.sample(candidate_routes, k=num_routes)
 
     users.append({
@@ -108,7 +115,16 @@ for i in range(1, N_POIS + 1):
     route = random.choice(popular_routes)
     # Use the same zones from accidents data for consistency
     zone = random.choice(ZONES_RESIDENTIAL)  
-    related_interests = random.sample(USER_INTERESTS_POOL, k=2)
+    
+    # Use mapped interests for this POI type with some randomness
+    poi_mapped_interests = POI_INTEREST_MAPPING[poi_type]
+    related_interests = random.sample(poi_mapped_interests, k=min(2, len(poi_mapped_interests)))
+    
+    # Add one random interest occasionally for variety (30% chance)
+    if random.random() < 0.3:
+        additional_interest = random.choice([i for i in USER_INTERESTS_POOL if i not in related_interests])
+        related_interests = related_interests[:1] + [additional_interest]
+    
     start_hour = random.randint(6, 10)
     end_hour = random.randint(18, 22)
     if start_hour >= end_hour:

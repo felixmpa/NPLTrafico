@@ -76,21 +76,34 @@ def recomendar_por_accidente():
         zona_trabajo = user["work_zone"]
         intereses = user["interests"]
         
+        print(f"🔍 Buscando POI para zonas: {zona_residencia}, {zona_trabajo}")
+        print(f"🎯 Intereses del usuario: {intereses}")
+        
         # Buscar POI en zonas del usuario con intereses similares
+        def has_matching_interests(poi_interests):
+            if not isinstance(poi_interests, list) or not isinstance(intereses, list):
+                return False
+            return any(i in poi_interests for i in intereses)
+        
         poi_candidates = points[
             (points["zone"].isin([zona_trabajo, zona_residencia])) &
-            (points["related_interests"].apply(lambda lst: isinstance(lst, list) and any(i in lst for i in intereses if isinstance(intereses, list))))
+            (points["related_interests"].apply(has_matching_interests))
         ]
+        
+        print(f"📍 POIs con intereses similares encontrados: {len(poi_candidates)}")
         
         if poi_candidates.empty:
             # Si no hay POI con intereses similares, buscar cualquier POI en las zonas
             poi_candidates = points[points["zone"].isin([zona_trabajo, zona_residencia])]
+            print(f"📍 POIs en zonas del usuario (sin filtro de intereses): {len(poi_candidates)}")
             
         if poi_candidates.empty:
             # Como último recurso, seleccionar cualquier POI
             poi = points.sample(1).iloc[0]
+            print("⚠️ Usando POI aleatorio (último recurso)")
         else:
             poi = poi_candidates.sample(1).iloc[0]
+            print(f"✅ POI seleccionado: {poi['name']} - Intereses: {poi['related_interests']}")
         
         mensaje += f"🧭 Te sugerimos visitar **{poi['name']}** ({poi['type']}) en {poi['zone']}. "
         mensaje += f"💡 Oferta actual: {poi['current_offer']}."

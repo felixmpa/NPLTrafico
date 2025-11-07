@@ -1,3 +1,4 @@
+from ETL.analizer_npl import main as run_analizer
 def main():
     print("\n" + "=" * 50)
     print("Transporte: Optimización del Tráfico y la Logística en Tiempo Real")
@@ -11,7 +12,8 @@ def main():
         choice = input("\nSelecciona una opción: ")
 
         if choice == "1":
-            print("\n¡WIP!")
+            print("\nEjecutando analizador...\n")
+            run_analizer()
         elif choice == "0":
             print("\n¡Hasta luego!")
             break
