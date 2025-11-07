@@ -3,10 +3,11 @@
 Caso práctico 3 [COLABORATIVO 02]: Solución Agentica NLP
 
 ### Configurar Entorno Python
+Versión de Python utilizada: 3.13.3
 
 Activar el entorno virtual (macOS/Linux):
 ```bash
-python3 -m venv venv
+python -m venv venv
 ```
 ```bash 
 source venv/bin/activate
@@ -24,4 +25,19 @@ venv\Scripts\activate
 ```bash
 python -m pip install -r requirements.txt
 ```
+
+### ETL
+
+Aquí tienes una versión mejor redactada y más profesional para el README:
+
+---
+
+El **dataset** ya está incluido en este proyecto. Sin embargo, si deseas **descargar datos desde otras cuentas de Instagram**, deberás **configurar tu propia instancia de Instaloader**.
+
+> **Nota:** Asegúrate de revisar cuidadosamente la documentación oficial de Instaloader en [https://instaloader.github.io/](https://instaloader.github.io/) para evitar el bloqueo de tu cuenta y cumplir con los **términos de privacidad y uso de Instagram**.
+
+```bash
+python -m instaloader --login tu_usuario_de_instagram
+```
+
 

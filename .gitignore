@@ -16,4 +16,8 @@ build/
 .aider*
 data/**/*.csv
 data/**/*.zip
-.DS_Storepython3 -m venv venv
+.DS_Store
+
+ETL/accidents.csv
+ETL/points_of_interest.csv
+ETL/users.csv
