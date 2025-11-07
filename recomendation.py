@@ -99,8 +99,12 @@ def run():
         for c in cols:
             df[c] = df[c].apply(parse_list)
 
-    # === EJEMPLO DE USO ===
-    ejemplo_usuarios = ["U001", "U004", "U005"]
+    # === EJEMPLO DE USO CON USUARIOS ALEATORIOS ===
+    # Seleccionar 3 usuarios aleatorios
+    usuarios_disponibles = users['user_id'].tolist()
+    ejemplo_usuarios = random.sample(usuarios_disponibles, min(3, len(usuarios_disponibles)))
+    
+    print(f"📋 Usuarios seleccionados aleatoriamente: {ejemplo_usuarios}")
     
     for uid in ejemplo_usuarios:
         print("\n" + "="*60)

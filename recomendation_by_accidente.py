@@ -25,7 +25,7 @@ def recomendar_por_accidente(users, accidents, points):
     ubicacion_accidente = accidente_seleccionado["extracted_locations"]
     
     print(f"🚨 ACCIDENTE SELECCIONADO:")
-    print(f"Tipo: {accidente_seleccionado['incident_type']}")
+    print(f"Severidad: {accidente_seleccionado['severity_score']:.2f}")
     print(f"Ubicación: {ubicacion_accidente}")
     print(f"Texto: {accidente_seleccionado['text'][:100]}...")
     print("\n" + "="*80)
@@ -55,9 +55,11 @@ def recomendar_por_accidente(users, accidents, points):
         print(f"Nombre: {user['name']}")
         print(f"Zona Residencial: {user['residential_zone']}")
         print(f"Zona de Trabajo: {user['work_zone']}")
-        print(f"Interes: {user["interests"]} - Rutas: {user["frequent_routes"]} \n\n")
+        print(f"Interes: {user['interests']} - Rutas: {user['frequent_routes']} \n\n")
 
-        mensaje = f"🚧 ALERTA: Se reporta un {accidente_seleccionado['incident_type'].lower()} en {ubicacion_accidente}. "
+        severidad = accidente_seleccionado['severity_score']
+        tipo_severidad = "incidente grave" if severidad > 0.7 else "incidente moderado" if severidad > 0.3 else "incidente leve"
+        mensaje = f"🚧 ALERTA: Se reporta un {tipo_severidad} en {ubicacion_accidente}. "
         mensaje += "Se recomienda evitar esta ruta.\n"
         
         # Buscar POI alternativo basado en intereses y zonas del usuario
