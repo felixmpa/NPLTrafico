@@ -1,6 +1,6 @@
 import pandas as pd
 import random
-from pathlib import Path
+import os
 
 # ==========================================================
 # CONFIG
@@ -37,7 +37,7 @@ POI_TYPES = list(POI_INTEREST_MAPPING.keys())
 # ==========================================================
 # 1. READ ACCIDENTS AND EXTRACT LOCATIONS
 # ==========================================================
-accidents_path = Path("accidents.csv")
+accidents_path = os.path.join(os.path.dirname(__file__), 'accidents.csv')
 if not accidents_path.exists():
     raise FileNotFoundError("❌ File 'accidents.csv' not found in current directory.")
 

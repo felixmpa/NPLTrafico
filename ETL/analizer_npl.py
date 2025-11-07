@@ -2,6 +2,7 @@ import pandas as pd
 import re
 from datetime import datetime
 from collections import Counter
+import os
 
 
 class AnalizerNLP:
@@ -342,7 +343,8 @@ def main():
     print("-" * 80)
 
     # Cargar dataset
-    df = pd.read_csv('instagram_posts.csv')
+    csv_path = os.path.join(os.path.dirname(__file__), 'instagram_posts.csv')
+    df = pd.read_csv(csv_path)
     print(f"Posts en el dataset: {len(df)}")
 
     # Analizar
@@ -359,7 +361,7 @@ def main():
         print(f"    - {ubicacion}: {count}")
 
     # Guardar dataset enriquecido
-    output_path = 'accidents.csv'
+    output_path = os.path.join(os.path.dirname(__file__), 'accidents.csv')
     df_enriquecido['extracted_locations'] = df_enriquecido['extracted_locations'].apply(
         lambda x: ', '.join(x) if isinstance(x, list) else ''
     )
