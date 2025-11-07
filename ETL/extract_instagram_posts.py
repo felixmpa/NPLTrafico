@@ -27,9 +27,9 @@ import pandas as pd
 # =============================
 # 🔧 CONFIGURACIÓN
 # =============================
-USERNAME = "elcheposord"        # ⚠️ Tu usuario de Instagram
-TARGET = "accidentes_rd"
-LIMIT = 350                      # Número máximo de publicaciones a intentar extraer (puedes subirlo)
+USERNAME = "tu-cuenta"
+TARGET = "cuenta-objetivo"
+LIMIT = 350
 OUTPUT_FILE = "instagram_posts.csv"
 
 # =============================
@@ -38,11 +38,11 @@ OUTPUT_FILE = "instagram_posts.csv"
 # Copia tus cookies desde tu navegador:
 # En Chrome/Edge/Brave → F12 → Application → Storage → Cookies → https://www.instagram.com
 cookies = {
-    "csrftoken": "XnwUJJa5qul1BhPbpJz07tf6h5Yb7OvC",
-    "sessionid": "78325552069%3ARklJ5VMZUF5ubo%3A29%3AAYiOsWhS6JNaHyJA53vozpmYf6bnp1JzW8-OD9yj1A",
-    "ds_user_id": "78325552069",
-    "mid": "Z_SknQAEAAHtx-0Ur_HMYQpptiZc",
-    "ig_did": "9294C868-E4E3-41C5-BC29-9AE569AA9CBE"
+    "csrftoken": "<crsf_token_value>",
+    "sessionid": "<session_id_value>",
+    "ds_user_id": "<ds_user_id_value>",
+    "mid": "<mid_value>",
+    "ig_did": "<ig_did_value>"
 }
 
 # =============================
