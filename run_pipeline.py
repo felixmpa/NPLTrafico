@@ -1,4 +1,5 @@
 from ETL.analizer_npl import main as run_analizer
+from ETL.generate_synthetic_data import run as run_generator
 
 def run_npl():
     print("\nEjecutando analizador NPL...")
@@ -13,8 +14,8 @@ def run_npl():
 def run_synthetic():
     print("\nGenerando Data...")
     try:
-        run_analizer()
-        print("data generada exitosamente")
+        run_generator()
+        print("Data generada exitosamente")
         return True
     except Exception as e:
         print(f"Error en generar data: {e}")
@@ -37,8 +38,8 @@ def main():
 
         if choice == "1":
             run_npl()
-        if choice == "2":
-                run_synthetic()
+        elif choice == "2":
+            run_synthetic()
         elif choice == "0":
             print("\n¡Hasta luego!")
             break
