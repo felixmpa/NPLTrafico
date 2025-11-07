@@ -1,0 +1,19 @@
+.claude/
+.idea
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.aider*
+data/**/*.csv
+data/**/*.zip
+.DS_Storepython3 -m venv venv
