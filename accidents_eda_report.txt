@@ -1,0 +1,15 @@
+REPORTE EDA - ANÁLISIS DE ACCIDENTES DE TRÁFICO
+============================================================
+
+Generado: 2025-11-07 18:54:24
+Dataset: ETL/accidents.csv
+Registros analizados: 350
+
+INSIGHTS PRINCIPALES:
+------------------------------
+1. 🎯 Severidad promedio: 0.33 - 0.9% son incidentes graves
+2. 📍 Cobertura de ubicaciones: 80.0% de posts tienen ubicaciones extraídas
+3. 🕐 Hora pico de reportes: 12:00 (40 reportes)
+4. 📅 Día con más reportes: Friday
+5. 📝 Correlación positiva entre longitud del texto y severidad: 0.246
+6. 📱 Plataforma más activa: instagram (100.0% de reportes)

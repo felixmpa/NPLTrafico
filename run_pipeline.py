@@ -2,6 +2,7 @@ from ETL.analizer_npl import main as run_analizer
 from ETL.generate_synthetic_data import run as run_generator
 from recomendation import run as run_recommendations
 from recomendation_by_accidente import run as run_accident_recommendations
+from EDA_accidents import run as run_eda
 
 def run_npl():
     print("\nEjecutando analizador NPL...")
@@ -43,6 +44,16 @@ def run_accident_recommendation_system():
         print(f"Error en sistema de recomendaciones por accidente: {e}")
         return False
 
+def run_eda_analysis():
+    print("\nEjecutando análisis exploratorio de datos (EDA)...")
+    try:
+        run_eda()
+        print("Análisis EDA completado exitosamente")
+        return True
+    except Exception as e:
+        print(f"Error en análisis EDA: {e}")
+        return False
+
 
 def main():
     """Método principal con menú interactivo."""
@@ -56,6 +67,7 @@ def main():
         print("2. Generar Data de Usuario y Puntos de Interes")
         print("3. Sistema de Recomendaciones Personalizado")
         print("4. Sistema de Recomendaciones por Accidentes")
+        print("5. Análisis Exploratorio de Datos (EDA)")
         print("0. Salir")
 
         choice = input("\nSelecciona una opción: ")
@@ -68,6 +80,8 @@ def main():
             run_recommendation_system()
         elif choice == "4":
             run_accident_recommendation_system()
+        elif choice == "5":
+            run_eda_analysis()
         elif choice == "0":
             print("\n¡Hasta luego!")
             break
