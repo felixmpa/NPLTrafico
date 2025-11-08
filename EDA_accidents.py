@@ -109,12 +109,20 @@ class AccidentsEDA:
         print("-" * 50)
         
         # Análisis por hora
-        hour_counts = self.df['hour'].value_counts().sort_index()
         print("🕐 Distribución por hora del día:")
-        for hour in range(0, 24, 3):
-            count = hour_counts.get(hour, 0)
+        # Definir los intervalos de 3 horas
+        bins = [(0, 2), (3, 5), (6, 8), (9, 11), (12, 14), (15, 17), (18, 20), (21, 23)]
+
+        total = 0
+        for start, end in bins:
+            # Contar cuántos registros caen dentro de ese rango
+            mask = (self.df['hour'] >= start) & (self.df['hour'] <= end)
+            count = mask.sum()
+            total += count
             pct = (count / len(self.df)) * 100
-            print(f"  {hour:>2}:00-{hour+2:>2}:59: {count:>3} ({pct:>4.1f}%)")
+            print(f"  {start:>2}:00-{end:>2}:59: {count:>3} ({pct:>4.1f}%)")
+
+        print(f"\n✅ Total registros contabilizados: {total} ({(total/len(self.df))*100:.1f}%)")
         
         # Análisis por día de la semana
         print("\n📅 Distribución por día de la semana:")
@@ -180,6 +188,42 @@ class AccidentsEDA:
         print(f"\n🎯 Estadísticas de confianza en el análisis:")
         for stat, value in confidence_stats.items():
             print(f"  {stat:<10}: {value:.3f}")
+            
+    def outlier_analysis(self):
+        """Analyze severity distribution and outliers by day of week"""
+        print("\n📊 ANÁLISIS DE OUTLIERS - SEVERIDAD POR DÍA")
+        print("-" * 60)
+
+        if 'day_of_week' not in self.df.columns or 'severity_score' not in self.df.columns:
+            print("⚠️ No hay columnas 'day_of_week' o 'severity_score' para el análisis.")
+            return
+
+        # Días en orden lógico
+        day_labels = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+        self.df['day_name'] = self.df['day_of_week'].replace(dict(zip(range(7), day_labels)))
+
+        # Estadísticas por día
+        print("📈 Severidad promedio por día:")
+        day_stats = self.df.groupby('day_name')['severity_score'].describe()[['mean', 'min', 'max']].round(3)
+        print(day_stats)
+
+        # 🎨 Boxplot por día
+        plt.figure(figsize=(10, 6))
+        sns.boxplot(
+            data=self.df,
+            x='day_name',
+            y='severity_score',
+            palette='coolwarm',
+            linewidth=1.2,
+            boxprops=dict(alpha=0.8),
+            medianprops=dict(color='yellow', linewidth=2)
+        )
+        plt.title("📦 Distribución de Severidad por Día de la Semana", fontsize=13, pad=12)
+        plt.xlabel("Día de la semana")
+        plt.ylabel("Score de Severidad")
+        plt.grid(axis='y', linestyle='--', alpha=0.6)
+        plt.tight_layout()
+        plt.show()
     
     def create_visualizations(self):
         """Create data visualizations"""
@@ -332,6 +376,7 @@ class AccidentsEDA:
         self.temporal_analysis()
         self.engagement_analysis()
         self.text_analysis()
+        self.outlier_analysis()
         self.create_visualizations()
         self.generate_insights_report()
         
